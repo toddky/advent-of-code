@@ -4,23 +4,31 @@ require_relative '../todd'
 
 file = 'example.txt'
 #file = 'input.txt'
-L = file.readlines
-P = file.readlines.split('')
-W = file.readlines.map(&:words)
-N = file.readlines.map(&:numbers)
-A = file.readlines.map(&:numbers).map(&:abs)
-C = file.readlines.mchars
-CSV = file.readlines.map{|line| line.split(',')}
-G = file.readlines.mchars
-rows, cols = G.rows, G.cols unless G.rows == 0
+LINES = file.readlines
+PARA  = file.readlines.split('')
+WORDS = file.readlines.map(&:words)
+NUMS  = file.readlines.map(&:numbers)
+ABS   = file.readlines.map(&:numbers).map(&:abs)
+CHARS = file.readlines.mchars
+CSV   = file.readlines.map{|line| line.split(',')}
+GRID  = file.readlines.mchars
+rows, cols = GRID.rows, GRID.cols unless GRID.rows == 0
 ans = 0
 
-
-L.mapi { |line, i| line }
-L.eachi do |line, i|
+# ==============================================================================
+# START CODE
+# ==============================================================================
+items = LINES
+items.mapi { |item, i| }
+items.eachi do |item, i|
 end
 
 
+
+
+# ==============================================================================
+# END CODE
+# ==============================================================================
 puts ans.s.bold.yellow
 puts 0.s.bold.green
 ans.clipboard unless ans == 0
