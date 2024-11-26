@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # vim: ft=ruby noet ts=4 sw=0 sts
-require_relative '../todd'
+require_relative '../../todd'
 
 file = 'example.txt'
 file = 'input.txt'
