@@ -43,6 +43,7 @@ class Object
 		print "\e]52;c;#{self.base64}\a"
 		puts "Copied #{self.to_s.bold.yellow} to clipboard"
 	end
+	def sym(); return self.to_sym; end
 end
 
 class Integer
@@ -113,6 +114,7 @@ class Array
 	# To
 	def i(); self.map(&:to_i); end
 	def s(); self.map(&:to_s); end
+	def sym(); self.map(&:to_sym); end
 	def h(); Hash[self]; end
 	def to_i(); self.map(&:to_i); end
 	def to_s(); self.map(&:to_s); end
