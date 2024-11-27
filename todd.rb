@@ -58,11 +58,13 @@ class Integer
 		return  1 if self > 0
 		return 0
 	end
+	def half(); return self / 2; end
 end
 
 class String
 	def i(); self.to_i; end
 	def ascii(); self.codepoints; end
+	def len(); self.size; end
 	# File
 	def readlines(); File.readlines(self).map(&:chomp); end
 	# Array
@@ -310,4 +312,49 @@ def unpair(z)
 	x = w - y
 	return [x, y]
 end
+
+
+# ==============================================================================
+# SUBMIT
+# ==============================================================================
+def submit(answer)
+
+	script_path = File.expand_path($0).split('/')
+	year, day, script_name = script_path[-3..-1]
+
+	# Strip leading 0 in day
+	day = day.i.s
+
+	# Get level
+	if script_name == 'a.rb' then
+		level = 1
+	elsif script_name == 'b.rb' then
+		level = 2
+	else
+		raise "Invalid script name #{script_name}"
+	end
+
+	session_path = File.dirname(File.expand_path(__FILE__))
+	session = File.read("#{session_path}/.session.txt").strip
+
+	url = "https://adventofcode.com/#{year}/day/#{day}/answer"
+	data = {'level' => level, 'answer' => answer}
+
+	require 'net/http'
+	require 'uri'
+
+	uri = URI.parse(url)
+	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true
+	request = Net::HTTP::Post.new(uri.path)
+	request['Cookie'] = "session=#{session}"
+	request.set_form_data(data)
+	response = http.request(request)
+	puts response
+	puts '='
+	puts response.code
+	puts '='
+	puts response.body
+end
+
 
