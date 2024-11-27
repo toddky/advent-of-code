@@ -70,6 +70,7 @@ class String
 	def words(); self.split(/\s+/); end
 	def splits(); self.split(/\s+/); end
 	def sort(); self.split('').sort.join(''); end
+	def chunks_of(n); self.chars.chunks_of(n).mjoin; end
 	# Union/Intersect
 	def &(string); (self.chars & string.chars).join; end
 	def |(string); (self.chars | string.chars).join; end
