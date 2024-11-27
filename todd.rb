@@ -70,6 +70,9 @@ class String
 	def words(); self.split(/\s+/); end
 	def splits(); self.split(/\s+/); end
 	def sort(); self.split('').sort.join(''); end
+	# Union/Intersect
+	def &(string); (self.chars & string.chars).join; end
+	def |(string); (self.chars | string.chars).join; end
 	# Regex
 	def in?(string); string.include? self; end
 	def d?(); self =~ /^-?\d+$/; end
