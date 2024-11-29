@@ -62,6 +62,7 @@ class Integer
 end
 
 class String
+	def s(); self.to_s; end
 	def i(); self.to_i; end
 	def ascii(); self.codepoints; end
 	def len(); self.size; end
@@ -319,8 +320,10 @@ end
 # ==============================================================================
 def submit(answer)
 
-	script_path = File.expand_path($0).split('/')
-	year, day, script_name = script_path[-3..-1]
+	puts
+	puts "Submitting answer #{answer.s.bold.yellow}..."
+	script_path = File.expand_path($0)
+	year, day, script_name = script_path.split('/')[-3..-1]
 
 	# Strip leading 0 in day
 	day = day.i.s
@@ -350,11 +353,15 @@ def submit(answer)
 	request['Cookie'] = "session=#{session}"
 	request.set_form_data(data)
 	response = http.request(request)
-	puts response
-	puts '='
-	puts response.code
-	puts '='
-	puts response.body
-end
 
+	# Write response body to a file
+	ts = Time.now.strftime("%Y%m%d-%H%M%S")
+	response_txt = "#{File.dirname(script_path)}/.response_#{ts}.txt"
+	File.write(response_txt, response.body)
+
+	puts
+	puts "Response code: #{response.code.s.bold.blue}"
+	main = response.body.match(/<main>\n(.*)^<\/main>/m)[1]
+	puts main
+end
 
