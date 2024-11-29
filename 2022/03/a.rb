@@ -14,7 +14,7 @@ ans = 0
 # START CODE
 # ==============================================================================
 items = LINES
-items = items.map { |i| i.chunks_of(i.size/2) }
+items = items.map { |i| i.chunks_of(i.len.half) }
 
 items.each do |a, b|
 	c = a & b
