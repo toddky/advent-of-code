@@ -67,9 +67,11 @@ class String
 	def ascii(); self.codepoints; end
 	def len(); self.size; end
 	# File
+	def read(); File.read(self); end
 	def readlines(); File.readlines(self).map(&:chomp); end
 	# Array
 	def csv(); self.split(/\s*,\s*/); end
+	def lines(); self.split("\n"); end
 	def words(); self.split(/\s+/); end
 	def splits(); self.split(/\s+/); end
 	def sort(); self.split('').sort.join(''); end
@@ -114,6 +116,7 @@ class Array
 	# Huge performance slowdown for 2023-16b, but it works
 	#def [](n); n.class == Array ? self.at(n[0]).at(n[1]) : self.at(n); end
 	#def get(*n); self.at(n.flatten[0]).at(n.flatten[1]); end
+	def len(); self.size; end
 	def get(n); self.at(n[0]).at(n[1]); end
 	def rows(); self.size; end
 	def cols(); self[0].size; end
@@ -318,7 +321,7 @@ end
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-def submit(answer)
+def submit(answer, level = nil)
 
 	puts
 	puts "Submitting answer #{answer.s.bold.yellow}..."
@@ -329,12 +332,14 @@ def submit(answer)
 	day = day.i.s
 
 	# Get level
-	if script_name == 'a.rb' then
-		level = 1
-	elsif script_name == 'b.rb' then
-		level = 2
-	else
-		raise "Invalid script name #{script_name}"
+	if level.nil? then
+		if script_name == 'a.rb' then
+			level = 1
+		elsif script_name == 'b.rb' then
+			level = 2
+		else
+			raise "Invalid script name #{script_name}"
+		end
 	end
 
 	session_path = File.dirname(File.expand_path(__FILE__))
@@ -357,7 +362,7 @@ def submit(answer)
 	# Write response body to a file
 	ts = Time.now.strftime("%Y%m%d-%H%M%S")
 	response_txt = "#{File.dirname(script_path)}/.response_#{ts}.txt"
-	File.write(response_txt, response.body)
+	File.write(response_txt, "#{url}\n#{data}\n\n#{response.body}")
 
 	puts
 	puts "Response code: #{response.code.s.bold.blue}"
