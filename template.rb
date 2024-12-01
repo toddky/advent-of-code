@@ -5,16 +5,20 @@
 # ==============================================================================
 require_relative '../../todd'
 
-file = 'example.txt'
-#file = 'input.txt'
-LINES = file.readlines
-PARA  = file.readlines.split('')
-WORDS = file.readlines.map(&:words)
-NUMS  = file.readlines.map(&:numbers)
-ABS   = file.readlines.map(&:numbers).map(&:abs)
-CHARS = file.readlines.mchars
-CSV   = file.readlines.map{|line| line.split(',')}
-GRID  = file.readlines.mchars
+input = <<-EOF
+
+EOF
+
+input = 'example.txt'.read
+#input = 'input.txt'.read
+LINES = input.lines
+PARA  = input.lines.split('')
+WORDS = input.lines.map(&:words)
+NUMS  = input.lines.map(&:numbers)
+ABS   = input.lines.map(&:numbers).map(&:abs)
+CHARS = input.lines.mchars
+CSV   = input.lines.map{|line| line.split(',')}
+GRID  = input.lines.mchars
 rows, cols = GRID.rows, GRID.cols unless GRID.rows == 0
 ans = 0
 
