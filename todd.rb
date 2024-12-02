@@ -141,11 +141,14 @@ class Array
 	# Map
 	def add(other); self.map.with_index { |n,i| n + other[i] }; end
 	def mapi(); self.map.with_index { |n,i| yield n, i }; end
+	def mabs(); self.map(&:abs); end
 	def mchars(); self.map(&:chars); end
 	def mdup(); self.map(&:dup); end
 	def mneg(); self.map{|n|-n}; end
+	def msort(); self.map(&:sort); end
 	def mjoin(c=''); self.map{|a| a.join(c)}; end
 	def mreverse(); self.map(&:reverse); end
+	def t(); self.transpose; end
 
 	# Select
 	def mod(div, rem); self.select.with_index{|_,i| i%div==rem}; end

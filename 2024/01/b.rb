@@ -7,15 +7,13 @@ require_relative '../../todd'
 
 file = 'example.txt'
 file = 'input.txt'
-NUMS  = file.readlines.map(&:numbers)
-ans = 0
+NUMS = file.readlines.map(&:numbers)
 
 # ==============================================================================
 # START CODE
 # ==============================================================================
-items = NUMS.transpose
-b = items[1].sort
-NUMS.each { |a,_| ans += a* b.count(a) }
+left, right = NUMS.t
+ans = left.map { |a| a*right.count(a) }.sum
 
 # ==============================================================================
 # END CODE

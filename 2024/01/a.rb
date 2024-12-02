@@ -7,15 +7,12 @@ require_relative '../../todd'
 
 file = 'example.txt'
 file = 'input.txt'
-NUMS  = file.readlines.map(&:numbers)
+NUMS = file.readlines.map(&:numbers)
 
 # ==============================================================================
 # START CODE
 # ==============================================================================
-items = NUMS.transpose
-a = items[0].sort
-b = items[1].sort
-ans = [a,b].transpose.map{|x,y| (x-y).abs }.sum
+ans = NUMS.t.msort.t.map{|x,y| x-y}.mabs.sum
 
 # ==============================================================================
 # END CODE
