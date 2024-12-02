@@ -50,8 +50,10 @@ end
 # INTEGER
 # ==============================================================================
 class Integer
-	# String
+	# Array
 	def a(); self.times.to_a; end
+	def map(); self.times.to_a.map{|i| yield i}; end
+	# String
 	def s(); self.to_s; end
 	def rjust(n); self.s.rjust(n,'0'); end
 	# Math
