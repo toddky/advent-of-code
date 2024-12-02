@@ -34,7 +34,7 @@ require 'digest'
 
 
 # ==============================================================================
-# DEFAULT
+# OBJECT
 # ==============================================================================
 class Object
 	def md5(); Digest::MD5.hexdigest(self.inspect); end
@@ -46,6 +46,9 @@ class Object
 	def sym(); return self.to_sym; end
 end
 
+# ==============================================================================
+# INTEGER
+# ==============================================================================
 class Integer
 	# String
 	def a(); self.times.to_a; end
@@ -61,6 +64,9 @@ class Integer
 	def half(); return self / 2; end
 end
 
+# ==============================================================================
+# STRING
+# ==============================================================================
 class String
 	def s(); self.to_s; end
 	def i(); self.to_i; end
@@ -79,11 +85,18 @@ class String
 	# Union/Intersect
 	def &(string); (self.chars & string.chars).join; end
 	def |(string); (self.chars | string.chars).join; end
+
+	def scan_all(regex)
+		match_data = []
+		self.scan(regex) { match_data << Regexp.last_match }
+		return match_data
+	end
+
 	# Regex
 	def in?(string); string.include? self; end
 	def d?(); self =~ /^-?\d+$/; end
-	def numbers(); self.scan(/-?\d+/).to_i; end
 	def nums(); self.scan(/-?\d+/).to_i; end
+	def numbers(); self.scan(/-?\d+/).to_i; end
 	def digits(); self.scan(/\d/).to_i; end
 	def m(regex, n)
 		m = regex.match(self)
@@ -93,19 +106,11 @@ class String
 	def m1(regex); self.m(regex,1); end
 	def m2(regex); self.m(regex,2); end
 	def m3(regex); self.m(regex,3); end
-	# Colors
-	def ansi(n); "\e[#{n}m#{self}\e[0m"; end
-	def bold();    ansi( 1); end
-	def black();   ansi(30); end
-	def red();     ansi(31); end
-	def green();   ansi(32); end
-	def yellow();  ansi(33); end
-	def blue();    ansi(34); end
-	def magenta(); ansi(35); end
-	def cyan();    ansi(36); end
-	def white();   ansi(37); end
 end
 
+# ==============================================================================
+# ARRAY
+# ==============================================================================
 class Array
 	def clean(); self.flatten.compact; end
 	# New
@@ -120,6 +125,10 @@ class Array
 	def get(n); self.at(n[0]).at(n[1]); end
 	def rows(); self.size; end
 	def cols(); self[0].size; end
+
+	# Shortcuts
+	def t(); self.transpose; end
+	def rev(); self.reverse; end
 
 	# To
 	def i(); self.map(&:to_i); end
@@ -147,8 +156,8 @@ class Array
 	def mneg(); self.map{|n|-n}; end
 	def msort(); self.map(&:sort); end
 	def mjoin(c=''); self.map{|a| a.join(c)}; end
+	def mrev(); self.map(&:reverse); end
 	def mreverse(); self.map(&:reverse); end
-	def t(); self.transpose; end
 
 	# Select
 	def mod(div, rem); self.select.with_index{|_,i| i%div==rem}; end
@@ -320,6 +329,22 @@ def unpair(z)
 	return [x, y]
 end
 
+# ==============================================================================
+# OTHER
+# ==============================================================================
+# Colors
+class String
+	def ansi(n); "\e[#{n}m#{self}\e[0m"; end
+	def bold();    ansi( 1); end
+	def black();   ansi(30); end
+	def red();     ansi(31); end
+	def green();   ansi(32); end
+	def yellow();  ansi(33); end
+	def blue();    ansi(34); end
+	def magenta(); ansi(35); end
+	def cyan();    ansi(36); end
+	def white();   ansi(37); end
+end
 
 # ==============================================================================
 # SUBMIT
