@@ -5,7 +5,10 @@
 # ==============================================================================
 require_relative '../../todd'
 
-input = <<-EOF
+inputs = Hash.new
+inputs[0] = 'input.txt'.read
+
+inputs[1] = <<-EOF
 MMMSXXMASM
 MSAMXMSMSA
 AMXSXMAAMM
@@ -18,27 +21,26 @@ MAMMMXMMMM
 MXMXAXMASX
 EOF
 
-#input = <<-EOF
-#...X...
-#..M.M..
-#.A...A.
-#S.....S
-#.A...A.
-#..M.M..
-#...X...
-#EOF
+inputs[2] = <<-EOF
+...X...
+..M.M..
+.A...A.
+S.....S
+.A...A.
+..M.M..
+...X...
+EOF
 
-#input = <<-EOF
-#X...
-#.M..
-#..A.
-#...S
-#EOF
-#input = input.lines.mreverse.join("\n")
+inputs[3] = <<-EOF
+X...
+.M..
+..A.
+...S
+EOF
+inputs[4] = inputs[3].lines.mreverse.join("\n")
 
-#input = 'example.txt'.read
-input = 'input.txt'.read
-GRID  = input.lines.mchars
+input = inputs[0]
+GRID = input.lines.mchars
 ans = 0
 
 # ==============================================================================
@@ -48,15 +50,11 @@ rows = GRID
 rows.mapi { |r, i| }
 
 def xmas(str)
-	return str.scan(/XMAS/).count + str.scan(/SAMX/).count
+	return str.join.scan(/XMAS/).count + str.join.scan(/SAMX/).count
 end
 
-rows.eachi do |r, i|
-	ans += xmas(r.join)
-end
-rows.transpose.eachi do |r, i|
-	ans += xmas(r.join)
-end
+ans += rows.map { |r| xmas(r) }.sum
+ans += rows.t.map { |r| xmas(r) }.sum
 
 # top right
 tri = []
@@ -64,9 +62,7 @@ rows.eachi do |r,i|
 	new = r[i..-1]+Array.new(i,' ')
 	tri.append(new)
 end
-tri.t.eachi do |r, i|
-	ans += xmas(r.join)
-end
+ans += tri.t.map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # bottom right
@@ -76,9 +72,7 @@ rows.eachi do |r,i|
 	new = r[(len-i-1)..-1]+Array.new(len-i,' ')
 	tri.append(new)
 end
-tri.t.eachi do |r, i|
-	ans += xmas(r.join)
-end
+ans += tri.t.map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # top left
@@ -90,7 +84,7 @@ rows.eachi do |r,i|
 end
 tri.t.eachi do |r, i|
 	next if i == r.len - 1
-	ans += xmas(r.join)
+	ans += xmas(r)
 end
 #puts tri.t.mjoin.join("\n")
 
@@ -103,7 +97,7 @@ rows.eachi do |r,i|
 end
 tri.t.eachi do |r, i|
 	next if i == r.len - 1
-	ans += xmas(r.join)
+	ans += xmas(r)
 end
 #puts tri.t.mjoin.join("\n")
 

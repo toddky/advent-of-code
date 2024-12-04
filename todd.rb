@@ -94,6 +94,9 @@ class String
 		return match_data
 	end
 
+	# Just do it
+	def join(); return self; end
+
 	# Regex
 	def in?(string); string.include? self; end
 	def d?(); self =~ /^-?\d+$/; end
