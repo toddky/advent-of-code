@@ -5,12 +5,16 @@
 # ==============================================================================
 require_relative '../../todd'
 
-input = <<-EOF
+inputs = Hash.new
+inputs[0] = 'input.txt'.read
+inputs[1] = 'example.txt'.read
+inputs[2] = <<-EOF
 
 EOF
 
-input = 'example.txt'.read
-#input = 'input.txt'.read
+input = inputs[0]
+input = inputs[1]
+input = inputs[2]
 LINES = input.lines
 PARA  = input.lines.split('')
 WORDS = input.lines.map(&:words)
@@ -19,15 +23,15 @@ ABS   = input.lines.map(&:numbers).map(&:abs)
 CHARS = input.lines.mchars
 CSV   = input.lines.map{|line| line.split(',')}
 GRID  = input.lines.mchars
-rows, cols = GRID.rows, GRID.cols unless GRID.rows == 0
+r_hi, c_hi = GRID.rows, GRID.cols unless GRID.rows == 0
 ans = 0
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-items = LINES
-items.mapi { |item, i| }
-items.eachi do |item, i|
+rows = LINES
+rows.mapi { |row, r| }
+rows.eachi do |row, r|
 end
 
 
