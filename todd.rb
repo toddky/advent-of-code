@@ -53,6 +53,7 @@ class Integer
 	# Array
 	def a(); self.times.to_a; end
 	def map(); self.times.to_a.map{|i| yield i}; end
+	def each(); self.times.each { |i| yield i }; end
 	# String
 	def s(); self.to_s; end
 	def rjust(n); self.s.rjust(n,'0'); end
@@ -256,9 +257,24 @@ class Array
 	def width(); self.mlen.max; end
 	def height(); self.size; end
 
+	# Get
+	def diags
+		d = Hash.new { |hash, key| hash[key] = [] }
+		u = Hash.new { |hash, key| hash[key] = [] }
+		h = self.height
+		w = self.width
+		h.times.each do |r|
+			w.times.each do |c|
+				d[r-c].append(self[r][c])
+				u[r-c].append(self[h-r-1][c])
+			end
+		end
+		return d.values + u.values
+	end
+
+	# Fill
 	def ljust(fill=' '); self.map { |s| s + Array.new(self.width-s.len,fill) }; end
 	def rjust(fill=' '); self.map { |s| Array.new(self.width-s.len,fill) + s }; end
-
 	def border(size=1, fill=nil)
 		raise NotGridError, "contains row sizes of: #{self.mlen.uniq.sort.join(',')}" unless self.grid?
 		new = Array.new(size) { Array.new(self.width,fill) } + self + Array.new(size) { Array.new(self.width,fill) }

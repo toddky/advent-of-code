@@ -48,35 +48,14 @@ ans = 0
 # ==============================================================================
 # CODE
 # ==============================================================================
-rows = GRID
-rows.mapi { |r, i| }
-
 def xmas(str)
 	return str.join.scan(/XMAS/).count + str.join.scan(/SAMX/).count
 end
 
+rows = GRID
 ans += rows.map { |r| xmas(r) }.sum
 ans += rows.t.map { |r| xmas(r) }.sum
-
-# top right
-tri = rows.mapi { |r,i| r[i..-1] }.ljust
-ans += tri.t.map { |r| xmas(r) }.sum
-#puts tri.t.mjoin.join("\n")
-
-# bottom right
-tri = rows.mapi { |r,i| r[(width-i-1)..-1] }.ljust
-ans += tri.t.map { |r| xmas(r) }.sum
-#puts tri.t.mjoin.join("\n")
-
-# top left
-tri = rows.mapi { |r,i| r[0..(width-i-1)] }.rjust
-ans += tri.t[0..-2].map { |r| xmas(r) }.sum
-#puts tri.t.mjoin.join("\n")
-
-# bottom left
-tri = rows.mapi { |r,i| r[0..i] }.rjust
-ans += tri.t[0..-2].map { |r| xmas(r) }.sum
-#puts tri.t.mjoin.join("\n")
+ans += rows.diags.map { |r| xmas(r) }.sum
 
 # ==============================================================================
 # END
