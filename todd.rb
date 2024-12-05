@@ -126,14 +126,12 @@ class Array
 	# Huge performance slowdown for 2023-16b, but it works
 	#def [](n); n.class == Array ? self.at(n[0]).at(n[1]) : self.at(n); end
 	#def get(*n); self.at(n.flatten[0]).at(n.flatten[1]); end
-	def len(); self.size; end
 	def get(n); self.at(n[0]).at(n[1]); end
-	def rows(); self.size; end
-	def cols(); self[0].size; end
 
 	# Shortcuts
-	def t(); self.transpose; end
+	def len(); self.size; end
 	def rev(); self.reverse; end
+	def t(); self.transpose; end
 
 	# To
 	def i(); self.map(&:to_i); end
@@ -158,6 +156,8 @@ class Array
 	def mabs(); self.map(&:abs); end
 	def mchars(); self.map(&:chars); end
 	def mdup(); self.map(&:dup); end
+	def mlen(); self.map(&:length); end
+	def mlength(); self.map(&:length); end
 	def mneg(); self.map{|n|-n}; end
 	def msort(); self.map(&:sort); end
 	def mjoin(c=''); self.map{|a| a.join(c)}; end
@@ -172,7 +172,6 @@ class Array
 	def ccw(); self.mreverse.transpose; end
 
 	# Check
-	def grid?(); self.map(&:size).uniq.size == 1; end
 	def split_at(n); [self[0...n], self[n..-1]]; end
 	def split(by)
 		a = []
@@ -244,6 +243,29 @@ class Enumerator
 	def a(); self.to_a; end
 end
 
+# ==============================================================================
+# GRID
+# ==============================================================================
+class NotGridError < StandardError
+	def initialize(msg="Array is not a grid"); super; end
+end
+
+class Array
+	# Info
+	def grid?(); self.map(&:size).uniq.size == 1; end
+	def width(); self.mlen.max; end
+	def height(); self.size; end
+
+	def ljust(fill=' '); self.map { |s| s + Array.new(self.width-s.len,fill) }; end
+	def rjust(fill=' '); self.map { |s| Array.new(self.width-s.len,fill) + s }; end
+
+	def border(size=1, fill=nil)
+		raise NotGridError, "contains row sizes of: #{self.mlen.uniq.sort.join(',')}" unless self.grid?
+		new = Array.new(size) { Array.new(self.width,fill) } + self + Array.new(size) { Array.new(self.width,fill) }
+		new = new.map { |row| Array.new(size,fill) + row + Array.new(size,fill) }
+		return new
+	end
+end
 
 # ==============================================================================
 # CUSTOM

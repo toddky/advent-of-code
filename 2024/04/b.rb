@@ -19,23 +19,22 @@ MXMXAXMASX
 EOF
 
 input = 'input.txt'.read
-GRID  = input.lines.mchars
+GRID = input.lines.mchars
+height, width = GRID.height, GRID.width if GRID.grid?
+puts "#{height}x#{width} grid".bold.blue if GRID.grid?
 ans = 0
 
 # ==============================================================================
 # CODE
 # ==============================================================================
 rows = GRID
-valid = ['MMSS', 'MSMS', 'SSMM', 'SMSM']
+valid = %w(MMSS MSMS SSMM SMSM)
+rows = rows.border(1,'.')
 
-(rows.len-2).a.each do |r|
-	row = rows[r]
-	(row.len-2).a.each do |c|
-		#puts rows[r][c..(c+2)].join
-		#puts rows[r+1][c..(c+2)].join
-		#puts rows[r+2][c..(c+2)].join
-		next unless rows[r+1][c+1] == 'A'
-		corners = rows[r][c] + rows[r][c+2] + rows[r+2][c] + rows[r+2][c+2]
+height.times do |r|
+	width.times do |c|
+		next unless rows[r][c] == 'A'
+		corners = rows[r-1][c-1] + rows[r-1][c+1] + rows[r+1][c-1] + rows[r+1][c+1]
 		ans += 1 if corners.in? valid
 	end
 end

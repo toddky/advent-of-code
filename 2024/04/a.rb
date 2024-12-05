@@ -40,7 +40,9 @@ EOF
 inputs[4] = inputs[3].lines.mreverse.join("\n")
 
 input = inputs[0]
+#input = inputs[4]
 GRID = input.lines.mchars
+height, width = GRID.height, GRID.width if GRID.grid?
 ans = 0
 
 # ==============================================================================
@@ -57,48 +59,23 @@ ans += rows.map { |r| xmas(r) }.sum
 ans += rows.t.map { |r| xmas(r) }.sum
 
 # top right
-tri = []
-rows.eachi do |r,i|
-	new = r[i..-1]+Array.new(i,' ')
-	tri.append(new)
-end
+tri = rows.mapi { |r,i| r[i..-1] }.ljust
 ans += tri.t.map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # bottom right
-tri = []
-rows.eachi do |r,i|
-	len = r.len
-	new = r[(len-i-1)..-1]+Array.new(len-i,' ')
-	tri.append(new)
-end
+tri = rows.mapi { |r,i| r[(width-i-1)..-1] }.ljust
 ans += tri.t.map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # top left
-tri = []
-rows.eachi do |r,i|
-	len = r.len
-	new = Array.new(i,' ')+r[0..(len-i-1)]
-	tri.append(new)
-end
-tri.t.eachi do |r, i|
-	next if i == r.len - 1
-	ans += xmas(r)
-end
+tri = rows.mapi { |r,i| r[0..(width-i-1)] }.rjust
+ans += tri.t[0..-2].map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # bottom left
-tri = []
-rows.eachi do |r,i|
-	len = r.len
-	new = Array.new(len-i-1,' ')+r[0..i]
-	tri.append(new)
-end
-tri.t.eachi do |r, i|
-	next if i == r.len - 1
-	ans += xmas(r)
-end
+tri = rows.mapi { |r,i| r[0..i] }.rjust
+ans += tri.t[0..-2].map { |r| xmas(r) }.sum
 #puts tri.t.mjoin.join("\n")
 
 # ==============================================================================
