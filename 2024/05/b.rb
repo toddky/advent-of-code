@@ -40,54 +40,18 @@ EOF
 
 input = inputs[0]
 #input = inputs[2]
-PARA  = input.lines.split('')
+PARA = input.lines.split('')
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-pages, orders = PARA
-pages = pages.map(&:numbers)
-orders = orders.map(&:numbers)
-
-page_map = {}
-pages.map { |x,y| y }.uniq.each do |n|
-	page_map[n] = pages.select { |x,y| y == n }.map { |x,y| x }
-end
-
-def check(prev, page_map)
-	prev.eachi do |n,i|
-		next if i == 0
-		c = page_map[n]
-		return false unless prev.first(i).all? { |x| c.include? x }
-	end
-	return true
-end
+pages = PARA[0].map(&:numbers)
+orders = PARA[1].map(&:numbers)
 
 bads = []
-
 orders.each do |order|
-	prev = []
-	good = true
-	order.each do |n|
-		if check(prev+[n], page_map)
-			prev.append(n)
-			next
-		end
-		good = false
-
-		fixed = false
-		(prev.len+1).each do |i|
-			prev2 = prev.dup
-			prev2.insert(i,n)
-			if check(prev2, page_map)
-				prev = prev2
-				fixed = true
-				break
-			end
-		end
-	end
-
-	bads.append(prev) if not good
+	sorted = pages.select { |x,y| order.has? x and order.has? y }.topsort
+	bads.append(sorted) if sorted != order
 end
 ans = bads.map {|x| x[(x.len-1)/2] }.sum
 

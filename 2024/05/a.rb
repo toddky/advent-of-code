@@ -45,9 +45,8 @@ PARA = input.lines.split('')
 # ==============================================================================
 # CODE
 # ==============================================================================
-pages, orders = PARA
-pages = pages.map(&:numbers)
-orders = orders.map(&:numbers)
+pages = PARA[0].map(&:numbers)
+orders = PARA[1].map(&:numbers)
 
 def check(n, prev, pages)
 	return true if prev.empty?
