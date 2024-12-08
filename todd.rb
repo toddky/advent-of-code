@@ -96,7 +96,8 @@ class String
 	end
 
 	# Just do it
-	def join(); return self; end
+	def has?(n); self.include?(n); end
+	def join(_=''); return self; end
 
 	# Regex
 	def in?(string); string.include? self; end
@@ -133,6 +134,9 @@ class Array
 	def len(); self.size; end
 	def rev(); self.reverse; end
 	def t(); self.transpose; end
+	def combs(n); self.combination(n); end
+	def perms(n); self.permutation(n); end
+	def has?(n); self.include?(n); end
 
 	# To
 	def i(); self.map(&:to_i); end
@@ -164,6 +168,9 @@ class Array
 	def mjoin(c=''); self.map{|a| a.join(c)}; end
 	def mrev(); self.map(&:reverse); end
 	def mreverse(); self.map(&:reverse); end
+
+	# Map Map
+	def mmjoin(c='',r="\n"); self.map{|a| a.join(c)}.join(r); end
 
 	# Select
 	def mod(div, rem); self.select.with_index{|_,i| i%div==rem}; end
