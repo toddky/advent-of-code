@@ -396,6 +396,13 @@ class String
 	def white();   ansi(37); end
 end
 
+def input_stats(input_txt)
+	lines = input_txt.lines
+	puts "#{lines.len} lines".bold.blue
+	words_per_line = input_txt.lines.map { |line| line.words.len }
+	puts "#{words_per_line.min}-#{words_per_line.max} words per line".bold.blue
+end
+
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
