@@ -6,13 +6,11 @@
 require_relative '../../todd'
 
 inputs = Hash.new
-inputs[0] = 'input.txt'.read
-inputs[1] = 'example.txt'.read
+inputs[1] = 'input.txt'.read
 inputs[2] = <<-EOF
 
 EOF
 
-input = inputs[0]
 input = inputs[1]
 input = inputs[2]
 LINES = input.lines
@@ -23,7 +21,9 @@ ABS   = input.lines.map(&:numbers).map(&:abs)
 CHARS = input.lines.mchars
 CSV   = input.lines.map{|line| line.split(',')}
 GRID  = input.lines.mchars
-r_hi, c_hi = GRID.rows, GRID.cols unless GRID.rows == 0
+height, width = GRID.height, GRID.width if GRID.grid?
+puts "#{height}x#{width} grid".bold.blue if GRID.grid?
+input_stats(inputs[1])
 ans = 0
 
 # ==============================================================================
@@ -33,6 +33,9 @@ rows = LINES
 rows.mapi { |row, r| }
 rows.eachi do |row, r|
 end
+p rows
+#rows = rows.border(1,'X')
+#puts rows.mmjoin
 
 
 # ==============================================================================
