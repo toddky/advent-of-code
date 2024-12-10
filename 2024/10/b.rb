@@ -53,17 +53,12 @@ end
 
 
 def solve(input)
-
 	lines = input.lines
 	rows = lines.map { |line| line.split('').map { |c| c == '.' ? -1 : c.i } }
 	rows = rows.border(1,-1)
 
-	ans = 0
-	starts = rows.each_with_index.flat_map { |row,r| row.each_index.select { |c| row[c] == 0 }.map {|c| [r,c]} }
-	starts.each do |r,c|
-		ans += dfs(rows, r, c)
-	end
-
+	starts = rows.gindex(0)
+	ans = starts.map { |r,c| dfs(rows, r, c) }.sum
 	return ans
 end
 

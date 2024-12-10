@@ -264,6 +264,16 @@ class Array
 	def width(); self.mlen.max; end
 	def height(); self.size; end
 
+	def gindex(s)
+		index = []
+		self.each_with_index do |row,r|
+			row.each_with_index do |col,c|
+				index.append([r,c]) if s == col
+			end
+		end
+		return index
+	end
+
 	# Get
 	def diags
 		d = Hash.new { |hash, key| hash[key] = [] }
