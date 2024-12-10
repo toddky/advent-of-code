@@ -37,24 +37,16 @@ EOF
 # CODE
 # ==============================================================================
 def dfs(rows,r,c)
-	d4 = [
-		[ 0, 1],
-		[ 0,-1],
-		[ 1, 0],
-		[-1, 0],
-	]
-
 	n = rows[r][c]
 	return [r,c] if n == 9
 
 	peaks = []
-	d4.map { |dr,dc| [r+dr,c+dc] }.each do |r1,c1|
+	Dir.D4.map { |dr,dc| [r+dr,c+dc] }.each do |r1,c1|
 		n1 = rows[r1][c1]
 		peaks += dfs(rows, r1, c1) if n1 == n + 1
 	end
 	return peaks
 end
-
 
 def solve(input)
 
