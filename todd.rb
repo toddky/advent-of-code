@@ -388,14 +388,22 @@ def e(string)
 	puts "#{from} #{"ERROR:".bold.red} #{string.to_s}"
 end
 
-def memoize(name, *args)
-	@cache ||= {}
-	@cache[name] ||= {}
-	orig_name = "orig_#{name}".to_sym
-	eval "alias #{orig_name} #{name}"
-	send(:define_method, name) do |*args|
-		return @cache[name][*args] if @cache[name][*args]
-		@cache[name][*args] ||= method(orig_name).call *args
+#def memoize(name, *args)
+#	@cache ||= {}
+#	@cache[name] ||= {}
+#	orig_name = "orig_#{name}".to_sym
+#	eval "alias #{orig_name} #{name}"
+#	send(:define_method, name) do |*args|
+#		return @cache[name][*args] if @cache[name][*args]
+#		@cache[name][*args] ||= method(orig_name).call *args
+#	end
+#end
+
+def memoize(method_name)
+	original_method = method(method_name)
+	cache = {}
+	define_singleton_method(method_name) do |*args|
+		cache[args] ||= original_method.call(*args)
 	end
 end
 

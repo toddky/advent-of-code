@@ -18,27 +18,21 @@ EOF
 # CODE
 # ==============================================================================
 
-$gcount = {}
 def count(s, n)
 	return 1 if n == 0
-
-	key = [s,n]
-	result = $gcount[key]
-	return result if result
-
-	if s == 0
-		return $gcount[key] = count(1,n-1)
-	end
+	return count(1,n-1) if s == 0
 
 	str = s.s
 	len = str.len
 	if len % 2 == 0
 		left, right = str.chars.each_slice(s.s.len/2).map { |a| a.join.i }
-		return $gcount[key] = count(left,n-1) + count(right,n-1)
+		return count(left,n-1) + count(right,n-1)
 	end
 
-	return $gcount[key] = count(s*2024,n-1)
+	return count(s*2024,n-1)
 end
+
+memoize(:count)
 
 def solve(input)
 	nums = input.lines.map(&:numbers)
