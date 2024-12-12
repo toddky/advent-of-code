@@ -252,6 +252,22 @@ class Enumerator
 end
 
 # ==============================================================================
+# SET
+# ==============================================================================
+class Set
+	def has?(n); self.include?(n); end
+	def len(); self.size; end
+
+	def append(n); self.add(n); end
+	def shift()
+		result = self.first
+		self.delete(result)
+		return result
+	end
+
+end
+
+# ==============================================================================
 # GRID
 # ==============================================================================
 class NotGridError < StandardError
@@ -338,25 +354,25 @@ class Dir
 	def Dir.W    ; W; end
 	def Dir.dirs ; Dir::DIRS; end
 
-	def Dir.D9
+	def Dir.D9(r=0,c=0)
 		return [
-			[-1,-1],[-1, 0],[-1, 1],
-			[ 0,-1],[ 0, 0],[ 0, 1],
-			[ 1,-1],[ 1, 0],[ 1, 1],
+			[r-1,c-1],[r-1,c  ],[r-1,c+1],
+			[r  ,c-1],[r  ,c  ],[r  ,c+1],
+			[r+1,c-1],[r+1,c  ],[r+1,c+1],
 		]
 	end
-	def Dir.D8
+	def Dir.D8(r=0,c=0)
 		return [
-			[-1,-1],[-1, 0],[-1, 1],
-			[ 0,-1],        [ 0, 1],
-			[ 1,-1],[ 1, 0],[ 1, 1],
+			[r-1,c-1],[r-1,c  ],[r-1,c+1],
+			[r  ,c-1],          [r  ,c+1],
+			[r+1,c-1],[r+1,c  ],[r+1,c+1],
 		]
 	end
-	def Dir.D4
+	def Dir.D4(r=0,c=0)
 		return [
-			        [-1, 0],
-			[ 0,-1],        [ 0, 1],
-			        [ 1, 0],
+			          [r-1,c  ],
+			[r  ,c-1],          [r  ,c+1],
+			          [r+1,c  ],
 		]
 	end
 end
@@ -398,7 +414,6 @@ end
 #		@cache[name][*args] ||= method(orig_name).call *args
 #	end
 #end
-
 def memoize(method_name)
 	original_method = method(method_name)
 	cache = {}
