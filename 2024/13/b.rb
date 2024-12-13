@@ -28,23 +28,24 @@ EOF
 # ==============================================================================
 # CODE
 # ==============================================================================
+require 'set'
+
+def det(a,b,c,d) return a*d - b*c; end
+
 def game(g)
-	a = g[0].nums
-	b = g[1].nums
-	px,py = g[2].nums
+	xa, ya = g[0].nums
+	xb, yb = g[1].nums
+	xp, yp = g[2].nums
 
-	101.times do |press_b|
+	large = 10000000000000
+	xp += large
+	yp += large
 
-		bx = b[0] * press_b
-		by = b[1] * press_b
-
-		press_ax, remain_ax = (px-bx).divmod(a[0])
-		press_ay, remain_ay = (py-by).divmod(a[1])
-
-		if remain_ax == 0 and remain_ay == 0 and press_ax == press_ay
-			return press_b + press_ax * 3
-		end
-	end
+	# a * xa + b * xb = xp
+	# a * ya + b * yb = yp
+	press_a, ra = det(xp,xb,yp,yb).divmod(det(xa,xb,ya,yb))
+	press_b, rb = det(xa,xp,ya,yp).divmod(det(xa,xb,ya,yb))
+	return 3 * press_a + press_b if ra == 0 and rb == 0
 	return 0
 end
 
@@ -62,7 +63,7 @@ select = 1
 input = inputs[select]
 ans = solve(input)
 
-real_ans = 27105
+real_ans = 101726882250942
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
 puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
 ans.clipboard if (ans != 0) and (select == 1)
