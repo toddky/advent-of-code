@@ -47,12 +47,22 @@ end
 # ==============================================================================
 select = 1
 select = 2
-input = inputs[select]
 input_stats(inputs[1])
+
+#if not ARGV.empty?
+#	select = ARGV.first.i
+#	if not inputs.has_key? select
+#		puts "#{"ERROR".b.red}: '#{select}' not found! Valid selections: #{inputs.keys.inspect}"
+#		exit 1
+#	end
+#end
+
+input = inputs[select]
 ans = solve(input)
 
-puts ans.s.bold.yellow
-#puts .s.bold.green
-ans.clipboard unless ans == 0
-#submit(ans)
+real_ans = 0
+puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
+puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
+ans.clipboard if (ans != 0) and (select == 1)
+#submit(ans) if select == 1
 
