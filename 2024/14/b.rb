@@ -27,24 +27,22 @@ EOF
 # ==============================================================================
 def solve(input)
 
-	nums = input.lines.map(&:numbers)
-
 	width = 101
 	height = 103
 
-	robots = nums
+	robots = input.lines.map(&:numbers)
 
-	i = 0
+	ans = 0
 	while true
-		i += 1
+		ans += 1
 		robots = robots.map { |x,y,vx,vy| [x+vx, y+vy, vx, vy] }
 		pos = robots.map { |x,y,vx,vy| [x%width, y%height] }
 
-		if pos.len - pos.uniq.len == 0
+		if pos.len == pos.uniq.len
 			rows = Array.newa(height,width,' ')
 			robots.each { |x,y,vx,vy| rows[y%height][x%width] = '#' }
 			puts rows.mmjoin
-			return i
+			return ans
 		end
 
 	end

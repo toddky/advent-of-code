@@ -27,7 +27,6 @@ EOF
 # ==============================================================================
 def solve(inputs, select)
 	input = inputs[select]
-	nums = input.lines.map(&:numbers)
 
 	if select == 1
 		width = 101
@@ -37,12 +36,8 @@ def solve(inputs, select)
 		height = 7
 	end
 
-	robots = nums
-
-	100.times do |i|
-		robots = robots.map { |x,y,vx,vy| [x+vx, y+vy, vx, vy] }
-	end
-	pos = robots.map { |x,y,vx,vy| [x%width, y%height] }
+	robots = input.lines.map(&:numbers)
+	pos = robots.map { |x,y,vx,vy| [(x+100*vx) % width, (y+100*vy) % height] }
 
 	ans = 1
 	ans *= pos.select { |x,y| x < width/2 and y < height / 2 }.len
