@@ -457,6 +457,11 @@ def input_stats(input_txt)
 	puts "#{lines.len} lines".bold.blue
 	words_per_line = input_txt.lines.map { |line| line.words.len }
 	puts "#{words_per_line.min}-#{words_per_line.max} words per line".bold.blue
+
+	# Grid
+	grid = lines.mchars
+	height, width = grid.height, grid.width if grid.grid?
+	puts "#{height}x#{width} grid".bold.blue if grid.grid?
 end
 
 # ==============================================================================
