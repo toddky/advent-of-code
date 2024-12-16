@@ -14,7 +14,8 @@ EOF
 # ==============================================================================
 # CODE
 # ==============================================================================
-def solve(input)
+def solve(inputs, select)
+	input = inputs[select]
 
 	lines    = input.lines
 	para     = input.lines.split('')
@@ -25,17 +26,16 @@ def solve(input)
 	csv      = input.lines.map{|line| line.split(',')}
 	grid     = input.lines.mchars
 
-	# Grid
-	height, width = grid.height, grid.width if grid.grid?
-	puts "#{height}x#{width} grid".bold.blue if grid.grid?
-
 	ans = 0
 
 	rows = lines
 	rows.mapi { |row, r| }
 	rows.eachi do |row, r|
+		#row.eachi do |col, |
+		#end
 	end
 	p rows
+
 	#rows = rows.border(1,'X')
 	#puts rows.mmjoin
 
@@ -57,8 +57,7 @@ input_stats(inputs[1])
 #	end
 #end
 
-input = inputs[select]
-ans = solve(input)
+ans = solve(inputs, select)
 
 real_ans = 0
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
