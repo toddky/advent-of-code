@@ -368,11 +368,34 @@ class Dir
 			[r+1,c-1],[r+1,c  ],[r+1,c+1],
 		]
 	end
+
+	def Dir.D5(r=0,c=0)
+		return [
+			          [r-1,c  ],
+			[r  ,c-1],[r  ,c  ],[r  ,c+1],
+			          [r+1,c  ],
+		]
+	end
 	def Dir.D4(r=0,c=0)
 		return [
 			          [r-1,c  ],
 			[r  ,c-1],          [r  ,c+1],
 			          [r+1,c  ],
+		]
+	end
+
+	def Dir.X5(r=0,c=0)
+		return [
+			[r-1,c-1],          [r-1,c+1],
+			          [r  ,c  ],          
+			[r+1,c-1],          [r+1,c+1],
+		]
+	end
+	def Dir.X4(r=0,c=0)
+		return [
+			[r-1,c-1],          [r-1,c+1],
+			
+			[r+1,c-1],          [r+1,c+1],
 		]
 	end
 end
