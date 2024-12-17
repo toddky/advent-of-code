@@ -46,36 +46,24 @@ EOF
 # ==============================================================================
 # CODE
 # ==============================================================================
-def move(grid,r,c,dir)
-	can_move = true
-	fr, fc = r, c
+def can_move?(grid,r,c,dir)
 	dr, dc = dir
+	nr, nc = r+dr, c+dc
+	o = grid[nr][nc]
+	return true if o == '.'
+	return false if o == '#'
 
-	while true
-		o = grid[fr][fc]
-		return [r,c] if o == '#'
+	return can_move?(grid,nr,nc,dir)
+end
 
-		if o == '.'
-			dist = (fr-r+fc-c).abs
+def move(grid,r,c,dir)
+	dr, dc = dir
+	nr, nc = r+dr, c+dc
 
-			dist.times do |d|
-				d = dist - d -1
+	move(grid,nr,nc,dir) unless grid[nr][nc] == '.'
 
-				r0 = r+((d+0)*dr)
-				c0 = c+((d+0)*dc)
-				r1 = r+((d+1)*dr)
-				c1 = c+((d+1)*dc)
-
-				grid[r1][c1] = grid[r0][c0]
-			end
-
-			grid[r][c] = '.'
-			return [r+dr, c+dc]
-		end
-
-		fr += dr
-		fc += dc
-	end
+	grid[nr][nc] = grid[r][c]
+	grid[r][c] = '.'
 end
 
 
@@ -96,8 +84,13 @@ def solve(inputs, select)
 		'v' => [1,0],
 	}
 
-	moves.each { |m| r,c = move(grid,r,c,dirs[m]) }
-	#puts grid.mmjoin
+	moves.each do |m|
+		if can_move?(grid,r,c,dirs[m])
+			move(grid,r,c,dirs[m])
+			r = r + dirs[m][0]
+			c = c + dirs[m][1]
+		end
+	end
 	return grid.gindex('O').map { |r,c| 100*r + c }.sum
 end
 
