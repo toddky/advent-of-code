@@ -331,6 +331,13 @@ class Array
 		return index
 	end
 
+	# Map
+	def gmap(l)
+		self.map { |row| row.map(l) { |col| yield col } }
+	end
+
+
+
 	# Get
 	def diags
 		d = Hash.new { |hash, key| hash[key] = [] }
