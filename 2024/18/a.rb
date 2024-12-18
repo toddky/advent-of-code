@@ -67,10 +67,9 @@ def solve(inputs, params, select=1)
 		v = flood[r][c] + 1
 		Dir.D4(r,c).each do |nr,nc|
 			next if grid[nr][nc] == '#'
-			if v < flood[nr][nc]
-				flood[nr][nc] = v
-				q.append([nr,nc])
-			end
+			next unless v < flood[nr][nc]
+			flood[nr][nc] = v
+			q.append([nr,nc])
 		end
 	end
 	#puts grid.transpose.mmjoin

@@ -44,7 +44,7 @@ params[2] = [7, 12]
 
 def path_exists(grid, max)
 
-	flood = Array.newa(max+2,max+2,Float::INFINITY)
+	flood = Array.newa(max+2,max+2,Inf)
 	flood[max][max] = 0
 	q = [[max,max]]
 	while not q.empty?
@@ -52,16 +52,14 @@ def path_exists(grid, max)
 		v = flood[r][c] + 1
 		Dir.D4(r,c).each do |nr,nc|
 			next if grid[nr][nc] == '#'
-			if v < flood[nr][nc]
-				flood[nr][nc] = v
-				q.append([nr,nc])
-			end
+			next unless v < flood[nr][nc]
+			flood[nr][nc] = v
+			q.append([nr,nc])
 		end
 	end
 	#puts grid.transpose.mmjoin
 
-	return flood[1][1]
-
+	return flood[1][1] != Inf
 end
 
 
@@ -82,8 +80,7 @@ def solve(inputs, params, select)
 		i += 1
 		grid[r+1][c+1] = '#'
 		next if i < first
-		exists = path_exists(grid, max) != Inf
-		return "#{r},#{c}" unless exists
+		return "#{r},#{c}" unless path_exists(grid, max)
 	end
 
 	return nil
