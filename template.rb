@@ -5,17 +5,21 @@
 # ==============================================================================
 require_relative '../../todd'
 
-inputs = Hash.new
+inputs = Hash.new(nil)
+params = Hash.new(nil)
 inputs[1] = 'input.txt'.read
+params[1] = nil
 inputs[2] = <<-EOF
 
 EOF
+params[2] = nil
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-def solve(inputs, select)
+def solve(inputs, params, select)
 	input = inputs[select]
+	param = params[select]
 
 	lines    = input.lines
 	para     = input.lines.split('')
@@ -25,6 +29,8 @@ def solve(inputs, select)
 	chars    = input.lines.mchars
 	csv      = input.lines.map{|line| line.split(',')}
 	grid     = input.lines.mchars
+
+	dirs = { '<' => [0,-1], '>' => [0,1], '^' => [-1,0], 'v' => [1,0] }
 
 	ans = 0
 
@@ -57,7 +63,7 @@ input_stats(inputs[1])
 #	end
 #end
 
-ans = solve(inputs, select)
+ans = solve(inputs, params, select)
 
 real_ans = 0
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
