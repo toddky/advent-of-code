@@ -194,6 +194,31 @@ class Array
 	def cw(); self.transpose.mreverse; end
 	def ccw(); self.mreverse.transpose; end
 
+	# Topological Sort [[x1,y1], [x2,y2],...]
+	def topsort()
+		graph = Hash.new { |hash, key| hash[key] = [] }
+		parents = []
+		children = []
+		self.each do |x,y|
+			graph[x].append(y)
+			parents.append(x)
+			children.append(y)
+		end
+
+		sorted = []
+		top = parents.uniq - children.uniq
+		until top.empty? do
+			parent = top.shift
+			children = graph[parent]
+			graph.delete parent
+			sorted.append(parent)
+			children.each do |child|
+				top.append(child) unless graph.values.flatten.include? child
+			end
+		end
+		return sorted
+	end
+
 	# Check
 	def split_at(n); [self[0...n], self[n..-1]]; end
 	def split(by)
