@@ -6,7 +6,9 @@
 require_relative '../../todd'
 
 inputs = Hash.new
+params = Hash.new
 inputs[1] = 'input.txt'.read
+params[1] = [71, 1024]
 inputs[2] = <<-EOF
 5,4
 4,2
@@ -34,23 +36,19 @@ inputs[2] = <<-EOF
 1,6
 2,0
 EOF
+params[2] = [7, 12]
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-def solve(inputs, select)
+def solve(inputs, params, select=1)
 
 	input = inputs[select]
+	param = params[select]
 	nums = input.lines.map(&:numbers)
 	grid = input.lines.mchars
 
-	if select == 1
-		max = 71
-		first = 1024
-	else
-		max = 7
-		first = 12
-	end
+	max, first = param
 
 	grid = Array.newa(max,max,'.')
 	grid = grid.border(1,'#')
@@ -87,7 +85,7 @@ end
 select = 1
 #select = 2
 
-ans = solve(inputs, select)
+ans = solve(inputs, params, select)
 
 real_ans = 316
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
