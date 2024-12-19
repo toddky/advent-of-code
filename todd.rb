@@ -461,6 +461,10 @@ class Heap
 		p @lt.call([1],[4])
 	end
 
+	def empty?
+		return @a.empty?
+	end
+
 	def push(*values)
 		values.each do |value|
 			@a.insert(0, value)
