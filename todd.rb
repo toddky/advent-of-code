@@ -450,6 +450,54 @@ end
 
 
 # ==============================================================================
+# HEAP
+# ==============================================================================
+class Heap
+	def initialize(&lt)
+		@a = Array.new
+		@lt = lt
+		@lt = Proc.new { |a,b| a[0] < b[0] } if @lt.nil?
+		p @lt.call([2],[0])
+		p @lt.call([1],[4])
+	end
+
+	def push(*values)
+		values.each do |value|
+			@a.insert(0, value)
+			self.heapify()
+		end
+	end
+
+	def pop()
+		return nil if @a.empty?
+		first = @a.first
+		last = @a.pop
+		return first if @a.empty?
+		@a[0] = last
+		self.heapify()
+		return first
+	end
+
+	def heapify(i=0,len=@a.len)
+		largest = i
+		left  = 2 * i + 1
+		right = 2 *i + 2
+
+		largest = left  if left  < len && @lt.call(@a[largest], @a[ left])
+		largest = right if right < len && @lt.call(@a[largest], @a[right])
+
+		if i != largest
+			@a[i], @a[largest] = @a[largest], @a[i]
+			self.heapify(largest,len)
+		end
+	end
+
+	def s(); self.to_s(); end
+	def to_s(); @a.to_s(); end
+	def inspect(); @a.inspect(); end
+end
+
+# ==============================================================================
 # FUNCTIONS
 # ==============================================================================
 def p(string, *inputs)
