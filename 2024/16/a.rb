@@ -93,14 +93,43 @@ def flood(grid,r,c, start)
 	return vals
 end
 
+def dij(grid, finish)
+
+	pq = Heap.new { |a,b| a[0] > b[0] }
+
+	start_pos = grid.gindex('S').flatten
+	r, c = start_pos
+	dir = [0,1]
+
+	pq.push([0,r,c,dir])
+
+	visited = Set.new
+	while not pq.empty?
+		v, r, c, dir = pq.pop
+		visited.add([r,c])
+		return v if [r,c] == finish
+		Dir.D4.each do |ndir|
+			nr, nc = r+ndir[0], c+ndir[1]
+			next if grid[nr][nc] == '#'
+			next if visited.has? [nr,nc]
+			nv = v + 1
+			nv += 1000 if dir != ndir
+			pq.push([nv,nr,nc,ndir])
+		end
+	end
+
+end
+
 def solve(inputs, select)
 	input = inputs[select]
 	rows = input.lines.mchars
 	start = rows.gindex('S').flatten
 	finish = rows.gindex('E').flatten
 
-	vals = flood(rows, finish[0], finish[1], [start[0],start[1],[0,1]])
-	return vals[start[0]][start[1]]
+	return dij(rows, finish)
+
+	#vals = flood(rows, finish[0], finish[1], [start[0],start[1],[0,1]])
+	#return vals[start[0]][start[1]]
 end
 
 # ==============================================================================
@@ -109,14 +138,10 @@ end
 select = 1
 #select = 2
 #select = 3
-input_stats(inputs[1])
 
 ans = solve(inputs, select)
 
-puts 89416.s.bold.red
-puts 90416.s.bold.red
-
-real_ans = 0
+real_ans = 88416
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
 puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
 ans.clipboard if (ans != 0) and (select == 1)
