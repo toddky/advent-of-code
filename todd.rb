@@ -457,8 +457,6 @@ class Heap
 		@a = Array.new
 		@lt = lt
 		@lt = Proc.new { |a,b| a[0] < b[0] } if @lt.nil?
-		p @lt.call([2],[0])
-		p @lt.call([1],[4])
 	end
 
 	def empty?
