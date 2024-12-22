@@ -58,18 +58,24 @@ def solve(inputs, params, select)
 
 	vals = flood(grid)
 
-	savings = []
+	max = vals.values.max
+
+	ans = 0
 	vals.each do |rc,v|
+		# Saves 100ms
+		next if v + param >= max
 		r,c = rc
 		vals.each do |frc ,fv|
+			# Saves 1s
+			next if fv-v < param
 			fr,fc = frc
 			dist = (r-fr).abs + (c-fc).abs
 			next if dist > 20
-			savings.append(fv-v-dist)
+			ans += 1 if fv-v-dist >= param
 		end
 	end
 
-	return savings.select { |s| s >= param }.len
+	return ans
 end
 
 # ==============================================================================
