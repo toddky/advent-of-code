@@ -60,13 +60,19 @@ def solve(inputs, params, select)
 		graph[b].append(a)
 	end
 
-	sets = Set.new
-	graph.sort.each do |k,v|
-		v.to_a.combination(2).each do |a,b|
-			sets.append([k,a,b].sort) if graph[a].has? b or graph[b].has? a
+	max_len = 0
+	max_set = []
+
+	graph.each do |k,v|
+		arr = [k] + v.to_a
+		(arr.len).times.flat_map { |i| arr.combination(i).to_a }.each do |combo|
+			next if combo.len <= max_len
+			next unless combo.combination(2).map { |a,b| graph[a].has? b }.all? true
+			max_set = combo
+			max_len = max_set.len
 		end
 	end
-	return sets.select { |set| set.select { |a| a[0] == 't' }.len > 0 }.len
+	return max_set.sort.join(',')
 end
 
 # ==============================================================================
@@ -77,7 +83,7 @@ select = 1
 
 ans = solve(inputs, params, select)
 
-real_ans = 1308
+real_ans = 'bu,fq,fz,pn,rr,st,sv,tr,un,uy,zf,zi,zy'
 puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
 puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
 ans.clipboard if (ans != 0) and (select == 1)
