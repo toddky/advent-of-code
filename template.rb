@@ -53,6 +53,8 @@ def solve(input, param)
 
 	#pq = Heap.new
 	#pq = Heap.new { |a,b| a[0] > b[0] }
+	#pq.push([a,b])
+	#a,b = pq.pop
 
 	return ans
 end
