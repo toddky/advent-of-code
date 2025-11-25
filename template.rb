@@ -4,23 +4,29 @@
 # SETUP
 # ==============================================================================
 require_relative '../../todd'
+File.delete('answer.txt') if File.exists?('answer.txt')
 
 inputs = Hash.new(nil)
 params = Hash.new(nil)
+answers = Hash.new(nil)
+
+# Real input
 inputs[1] = 'input.txt'.read
 params[1] = nil
+answers[1] = nil
+
+# Example input
 inputs[2] = <<-EOF
 
 EOF
 params[2] = nil
+answers[2] = nil
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-def solve(inputs, params, select)
-	input = inputs[select]
-	param = params[select]
 
+def solve(input, param)
 	lines    = input.lines
 	para     = input.lines.split('')
 	words    = input.lines.map(&:words)
@@ -45,29 +51,33 @@ def solve(inputs, params, select)
 	#rows = rows.border(1,'X')
 	#puts rows.mmjoin
 
+	#pq = Heap.new
+	#pq = Heap.new { |a,b| a[0] > b[0] }
+
 	return ans
 end
 
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-select = 1
-select = 2
+sel = 1
+sel = 2
 input_stats(inputs[1])
 
-#if not ARGV.empty?
-#	select = ARGV.first.i
-#	if not inputs.has_key? select
-#		puts "#{"ERROR".b.red}: '#{select}' not found! Valid selections: #{inputs.keys.inspect}"
-#		exit 1
-#	end
-#end
+exp_ans = answers[sel]
+ans = solve(inputs[sel], params[sel])
+puts "[#{sel}] #{ans.s.bold.yellow}".bold.blue
+puts "[#{sel}] #{exp_ans.s.bold.green}".bold.blue unless exp_ans.nil?
 
-ans = solve(inputs, params, select)
-
-real_ans = 0
-puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
-puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
-ans.clipboard if (ans != 0) and (select == 1)
-#submit(ans) if select == 1
+do_real = true
+#do_real = false
+if do_real and not exp_ans.nil? and ans == exp_ans and sel != 1 then
+	real_ans = answers[1]
+	ans = solve(inputs[1], params[1])
+	puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans.nil?
+	File.write('answer.txt', ans)
+	puts 'Wrote to answer.txt'
+	ans.clipboard
+	#submit(ans)
+end
 
