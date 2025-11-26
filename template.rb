@@ -51,6 +51,9 @@ def solve(input, param)
 	#rows = rows.border(1,'X')
 	#puts rows.mmjoin
 
+	#row.each_cons(2) { |a,b| a + b }
+	#row.combination(2).each { |pair| p pair }
+
 	#pq = Heap.new
 	#pq = Heap.new { |a,b| a[0] > b[0] }
 	#pq.push([a,b])
@@ -59,25 +62,32 @@ def solve(input, param)
 	return ans
 end
 
+
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-sel = 1
-sel = 2
 input_stats(inputs[1])
 
-exp_ans = answers[sel]
-ans = solve(inputs[sel], params[sel])
-puts "[#{sel}] #{ans.s.bold.yellow}".bold.blue
-puts "[#{sel}] #{exp_ans.s.bold.green}".bold.blue unless exp_ans.nil?
+sel = 1
+sel = 2
 
-do_real = true
-#do_real = false
-if do_real and not exp_ans.nil? and ans == exp_ans and sel != 1 then
-	real_ans = answers[1]
-	ans = solve(inputs[1], params[1])
-	puts "[#{sel}] #{ans.s.bold.yellow}".bold.blue
-	puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans.nil?
+ans = solve(inputs[sel], params[sel])
+
+sel_s = "[#{sel}]".bold.blue
+exp_ans = answers[sel]
+puts "#{sel_s} #{ans.s.bold.yellow}"
+puts "#{sel_s} #{exp_ans.nil? ? 'UNDEF'.bold.red : exp_ans.s.bold.green}"
+
+exit unless sel != 1
+sel = 1
+ans = solve(inputs[sel], params[sel])
+sel_s = "[#{sel}]".bold.blue
+exp_ans = answers[sel]
+puts "#{sel_s} #{ans.s.bold.yellow}"
+
+if not exp_ans.nil?
+	puts "#{sel_s} #{exp_ans.nil? ? 'UNDEF'.bold.red : exp_ans.s.bold.green}"
+else
 	File.write('answer.txt', ans)
 	puts 'Wrote to answer.txt'
 	ans.clipboard
