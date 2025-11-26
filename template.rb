@@ -76,6 +76,7 @@ do_real = true
 if do_real and not exp_ans.nil? and ans == exp_ans and sel != 1 then
 	real_ans = answers[1]
 	ans = solve(inputs[1], params[1])
+	puts "[#{sel}] #{ans.s.bold.yellow}".bold.blue
 	puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans.nil?
 	File.write('answer.txt', ans)
 	puts 'Wrote to answer.txt'
