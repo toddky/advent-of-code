@@ -62,6 +62,7 @@ end
 # INTEGER
 # ==============================================================================
 class Integer
+	def i(); self.to_i; end
 	# Array
 	def a(); self.times.to_a; end
 	def map(); self.times.to_a.map{|i| yield i}; end
