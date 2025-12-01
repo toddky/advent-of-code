@@ -15,8 +15,7 @@ input = <<-EOF
 EOF
 
 input = 'input.txt'.read
-NUMS  = input.lines.map(&:numbers)
-ans = 0
+NUMS = input.lines.map(&:numbers)
 
 # ==============================================================================
 # CODE
@@ -24,17 +23,12 @@ ans = 0
 items = NUMS
 
 def safe(a)
-	a = (a.len-1).map { |i| a[i]-a[i+1] }
+	a = a.each_cons(2).map { |x,y| x-y }
 	return false unless (a == a.abs) or (a == a.abs.mneg)
-	a = a.abs.sort
-	return false if a[0] < 1
-	return false if a[-1] > 3
-	return true
+	return a.abs.all? { |x| x > 0 && x < 4 }
 end
 
-items.eachi do |item, row|
-	ans += 1 if safe(item)
-end
+ans = items.select { |i| safe(i) }.len
 
 # ==============================================================================
 # END
