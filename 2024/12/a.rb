@@ -38,15 +38,11 @@ def prim(rows,r,c)
 	char = rows[r][c]
 
 	while not b.empty?
-		r,c = b.shift
-		check = rows[r][c]
-		next unless check == char
-
+		rc = b.shift
+		r,c = rc
+		next unless char == rows[r][c]
 		a.append [r,c]
-		Dir.D4(r,c).each do |nr,nc|
-			next if a.has? [nr,nc]
-			b.append [nr,nc]
-		end
+		Dir.D4(r,c).each { |nr,nc| b.append [nr,nc] unless a.has? [nr,nc] }
 	end
 
 	perim = a.map { |r,c| Dir.D4(r,c).select { |nr,nc| not a.has? [nr,nc] }.len }.sum
@@ -86,8 +82,9 @@ select = 1
 input = inputs[select]
 ans = solve(input)
 
-puts ans.s.bold.yellow
-puts 1494342.s.bold.green
-ans.clipboard unless ans == 0
-#submit(ans)
+real_ans = 1494342
+puts "[#{select}] #{ans.s.bold.yellow}".bold.blue
+puts "[1] #{real_ans.s.bold.green}".bold.blue unless real_ans == 0
+ans.clipboard if (ans != 0) and (select == 1)
+#submit(ans) if select == 1
 
