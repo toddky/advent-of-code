@@ -18,35 +18,25 @@ input = <<-EOF
 .664.598..
 EOF
 
-#input = 'example.txt'.read
 input = 'input.txt'.read
-LINES = input.lines
 GRID  = input.lines.mchars
-rows = GRID.len
-cols = GRID.first.len
 ans = 0
 
 # ==============================================================================
 # CODE
 # ==============================================================================
-items = LINES
-
-items.insert(0, '.' * cols)
-items.push('.' * cols)
-items = items.map { |i| '.' + i + '.' }
-#puts items
+lines = GRID.border(1, '.').mjoin
 
 pos = []
-
-items.eachi do |i, row|
-	pos += i.scan_all(/[0-9]+/).map { |s| [s[0].i, row, s.begin(0), s.end(0)] }
+lines.eachi do |row, r|
+	pos += row.scan_all(/[0-9]+/).map { |s| [s[0].i, r, s.begin(0), s.end(0)] }
 end
 
-pos.each do |num, row, x, y|
+pos.each do |num, r, a, b|
 	s = ''
-	s += items[row-1][(x-1)..(y)]
-	s += items[row][(x-1)..(y)]
-	s += items[row+1][(x-1)..(y)]
+	s += lines[r-1][(a-1)..(b)]
+	s += lines[r][(a-1)..(b)]
+	s += lines[r+1][(a-1)..(b)]
 	ans += num if s.gsub(/[\.0-9]/,'').len > 0
 end
 
