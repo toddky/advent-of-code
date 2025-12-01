@@ -51,9 +51,7 @@ def get_pos(rows, char)
 	return rows.each_with_index.flat_map { |row,r| row.each_index.select { |c| row[c] == char }.map {|c| [r,c]} }
 end
 
-def valid(r,c,height,width)
-	return (r >= 0) && (c >= 0) && (r < height) && (c < width)
-end
+valid = lambda { |a| (a[0] >= 0) && (a[1] >= 0) && (a[0] < height) && (a[1] < width) }
 
 all_pos = []
 chars.each do |c|
@@ -79,7 +77,7 @@ chars.each do |c|
 	end
 end
 
-ans = all_pos.select { |a| valid(a[0], a[1], height, width) }.uniq.len
+ans = all_pos.select(&valid).uniq.len
 
 # ==============================================================================
 # END
