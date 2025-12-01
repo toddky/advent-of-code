@@ -7,7 +7,6 @@ require_relative '../../todd'
 
 inputs = Hash.new
 inputs[0] = 'input.txt'.read
-inputs[1] = 'example.txt'.read
 inputs[2] = <<-EOF
 ....#.....
 .........#
