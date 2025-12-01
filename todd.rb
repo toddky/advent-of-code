@@ -336,11 +336,11 @@ class Array
 		return index
 	end
 
-	# Map
-	def gmap(l)
-		self.map { |row| row.map(l) { |col| yield col } }
-	end
+	# .gmap { |r,c,v| <expr> }
+	def gmap(); self.map.with_index { |row,r| row.map.with_index { |v,c| yield r,c,v } }; end
 
+	# .geach { |r,c,v| <expr> }
+	def geach(); self.each.with_index { |row,r| row.each.with_index { |v,c| yield r,c,v } }; end
 
 
 	# Get
