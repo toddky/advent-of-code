@@ -78,7 +78,7 @@ exp_ans = answers[sel]
 puts "#{sel_s} #{ans.s.bold.yellow}"
 puts "#{sel_s} #{exp_ans.nil? ? 'UNDEF'.bold.red : exp_ans.s.bold.green}"
 
-exit unless sel != 1
+exit unless sel != 1 and ans == exp_ans
 sel = 1
 ans = solve(inputs[sel], params[sel])
 sel_s = "[#{sel}]".bold.blue
