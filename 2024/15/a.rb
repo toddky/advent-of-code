@@ -77,12 +77,7 @@ def solve(inputs, select)
 
 	r,c = grid.gindex('@').flatten
 
-	dirs = {
-		'<' => [0,-1],
-		'>' => [0,1],
-		'^' => [-1,0],
-		'v' => [1,0],
-	}
+	dirs = { '<' => [0,-1], '>' => [0,1], '^' => [-1,0], 'v' => [1,0] }
 
 	moves.each do |m|
 		if can_move?(grid,r,c,dirs[m])
