@@ -22,10 +22,10 @@ EOF
 params[2] = nil
 answers[2] = nil
 
+
 # ==============================================================================
 # CODE
 # ==============================================================================
-
 def solve(input, param)
 	lines    = input.lines
 	para     = input.lines.split('')
@@ -67,12 +67,10 @@ end
 # SUBMIT
 # ==============================================================================
 input_stats(inputs[1])
-
 sel = 1
 sel = 2
 
 ans = solve(inputs[sel], params[sel])
-
 sel_s = "[#{sel}]".bold.blue
 exp_ans = answers[sel]
 puts "#{sel_s} #{ans.s.bold.yellow}"
