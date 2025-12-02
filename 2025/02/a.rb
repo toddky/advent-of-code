@@ -30,21 +30,11 @@ answers[2] = 1227775554
 def solve(input, param)
 	rows = input.lines.join('').split(',')
 
-	# REVISIT: WTF did I do wrong?
-	def valid(n)
-		n = n.s
-		len = n.len
-		a = n[0..((len/2)-1)]
-		b = n[(len/2)..-1]
-		return a != b
-	end
-
 	ans = 0
 	rows.each do |row|
 		a, b = row.split('-').i
 		(a..b).each do |n|
 			invalid = (n.s =~ /^(\d+)\1$/)
-			#invalid = (not valid(n))
 			ans += n if invalid
 		end
 	end
@@ -55,7 +45,6 @@ end
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-input_stats(inputs[1])
 sel = 1
 sel = 2
 ans = solve(inputs[sel], params[sel])
