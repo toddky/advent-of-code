@@ -13,7 +13,7 @@ answers = Hash.new(nil)
 # Real input
 inputs[1] = 'input.txt'.read
 params[1] = nil
-answers[1] = nil
+answers[1] = 172886048065379
 
 # Example input
 inputs[2] = <<-EOF
@@ -32,46 +32,27 @@ answers[2] = 3121910778619
 def solve(input, param)
 	chars = input.lines.mchars
 
-	def largest(nums, n=1)
-		return nil if nums.len == 0
-
-		max = nums.max
-		return max if n == 1
-		i = nums.index(max)
-
-		vals = []
-
-		left = largest(nums[0..(i-1)], n-1)
-		if not left.nil? and i != 0
-			vals.append((left.s + max.s).i)
+	def largest(num, n=1)
+		all = []
+		num_s = num.s
+		len = num_s.len
+		return num if n == len
+		(len).each do |i|
+			if i == 0
+				all.append(num_s[1..-1])
+				next
+			elsif i == len - 1
+				all.append(num_s[1..-2])
+				next
+			end
+			all.append(num_s[0..(i-1)] + num_s[(i+1)..-1])
 		end
-		
-
-		right = largest(nums[(i+1)..-1], n-1)
-		if not right.nil?
-			vals.append((max.s + right.s).i)
-		end
-
-		# REVISIT: If vals is empty, pick a different max
-		return nil if vals.empty?
-
-		#max = [left, right].max
-		max = vals.max
-
-		return max
+		return largest(all.s.mjoin.i.max, n)
 	end
 
-	p largest(987654321111111.s.chars.i,12)
-	p 987654321111
-
-	p largest(811111111111119.s.chars.i,12)
-	p 811111111119
-
-	p largest(234234234234278.s.chars.i,12)
-	p 434234234278
-
-	p largest(818181911112111.s.chars.i,12)
-	p 888911112111
+	#p largest(123.s.chars.i,2)
+	#p largest(321.s.chars.i,2)
+	#p largest(123321.s.chars.i,2)
 
 	ans = 0
 	chars.i.each do |nums|
