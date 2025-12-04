@@ -43,7 +43,7 @@ def solve(input, param)
 	while true
 		rows.geach do |r, c, v|
 			next if v == '.'
-			remove.append([r,c]) if (Dir.D9(r,c).map { |r1,c1| rows[r1][c1] }.count('@') <= 4)
+			remove.append([r,c]) if (Dir.D8(r,c).map { |r1,c1| rows[r1][c1] }.count('@') <= 3)
 		end
 		ans += remove.len
 		remove.each { |r,c| rows[r][c] = '.' }
@@ -56,10 +56,8 @@ end
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-input_stats(inputs[1])
 sel = 1
 sel = 2
-
 ans = solve(inputs[sel], params[sel])
 sel_s = "[#{sel}]".bold.blue
 exp_ans = answers[sel]
