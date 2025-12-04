@@ -151,6 +151,16 @@ class Array
 	#def get(*n); self.at(n.flatten[0]).at(n.flatten[1]); end
 	def get(n); self.at(n[0]).at(n[1]); end
 
+	# Remove
+	# [1,2,3].rm(1) => [1,3]
+	def rm(n)
+		# This is faster than
+		# return (self[0...n] + self[(n+1)..-1])
+		copy = self.dup
+		copy.delete_at(n)
+		return copy
+	end
+
 	# Shortcuts
 	def len(); self.size; end
 	def rev(); self.reverse; end
