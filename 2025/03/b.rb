@@ -32,27 +32,18 @@ answers[2] = 3121910778619
 def solve(input, param)
 	chars = input.lines.mchars
 
-	def largest(num, n=1)
-		all = []
+	def largest(num, n)
 		num_s = num.s
 		len = num_s.len
 		return num if n == len
-		(len).each do |i|
-			if i == 0
-				all.append(num_s[1..-1])
-				next
-			elsif i == len - 1
-				all.append(num_s[1..-2])
-				next
-			end
-			all.append(num_s[0..(i-1)] + num_s[(i+1)..-1])
-		end
-		return largest(all.s.mjoin.i.max, n)
+		all = len.map { |i| num_s[0...i] + num_s[(i+1)..-1] }
+		return largest(all.mjoin.i.max, n)
 	end
 
 	#p largest(123.s.chars.i,2)
 	#p largest(321.s.chars.i,2)
 	#p largest(123321.s.chars.i,2)
+	#exit
 
 	ans = 0
 	chars.i.each do |nums|
@@ -65,10 +56,8 @@ end
 # ==============================================================================
 # SUBMIT
 # ==============================================================================
-input_stats(inputs[1])
 sel = 1
 sel = 2
-
 ans = solve(inputs[sel], params[sel])
 sel_s = "[#{sel}]".bold.blue
 exp_ans = answers[sel]
