@@ -30,26 +30,24 @@ answers[2] = 3121910778619
 # CODE
 # ==============================================================================
 def solve(input, param)
-	chars = input.lines.mchars
-
 	def largest(num, n)
-		num_s = num.s
+		num_s = num.s.chars
 		len = num_s.len
 		return num if n == len
-		all = len.map { |i| num_s[0...i] + num_s[(i+1)..-1] }
-		return largest(all.mjoin.i.max, n)
+		all = len.map { |i| num_s.rm(i).join.i }
+		return largest(all.max, n)
 	end
 
-	#p largest(123.s.chars.i,2)
-	#p largest(321.s.chars.i,2)
-	#p largest(123321.s.chars.i,2)
+	#p [1,2,3].rm(1); exit
+
+	#p largest(123,2); exit
+
+	#p largest(123,2)
+	#p largest(321,2)
+	#p largest(123321,2)
 	#exit
 
-	ans = 0
-	chars.i.each do |nums|
-		ans += largest(nums, 12)
-	end
-	return ans
+	return input.lines.map { |line| largest(line, 12) }.sum
 end
 
 
