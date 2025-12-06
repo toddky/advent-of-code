@@ -35,9 +35,9 @@ def solve(input, param)
 
 	ans = 0
 	words.transpose.each do |row|
-		sign = row[-1]
+		op = row[-1]
 		nums = row[0..-2].i
-		if sign == '*'
+		if op == '*'
 			ans += nums.product
 		else
 			ans += nums.sum

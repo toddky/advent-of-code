@@ -30,40 +30,19 @@ answers[2] = 3263827
 # CODE
 # ==============================================================================
 def solve(input, param)
-	words    = input.lines.map(&:words)
-	chars    = input.lines.mchars
+	lines = input.lines
+
+	ops = lines.map(&:words)[-1]
+	chars = input.lines.mchars
+	nums = chars[0..-2].transpose.mjoin.i.split(0)
 
 	ans = 0
-
-	ops = words[-1]
-	chars = chars[0..-2].transpose.mjoin.i
-	chars.append(0)
-
-	op_index = 0
-	n = nil
-	chars.eachi do |row, r|
-		num = row
-
-		if num == 0
-			op_index += 1
-			ans += n
-			n = nil
-			next
-		end
-
-		sign = ops[op_index]
-		if n.nil?
-			if sign == '*'
-				n = 1
-			else
-				n = 0
-			end
-		end
-
-		if sign == '*'
-			n *= num
+	nums.eachi do |n, i|
+		op = ops[i]
+		if op == '*'
+			ans += n.product
 		else
-			n += num
+			ans += n.sum
 		end
 	end
 	return ans
@@ -75,7 +54,6 @@ end
 # ==============================================================================
 sel = 1
 sel = 2
-
 ans = solve(inputs[sel], params[sel])
 sel_s = "[#{sel}]".bold.blue
 exp_ans = answers[sel]

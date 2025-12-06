@@ -69,7 +69,6 @@ end
 input_stats(inputs[1])
 sel = 1
 sel = 2
-
 ans = solve(inputs[sel], params[sel])
 sel_s = "[#{sel}]".bold.blue
 exp_ans = answers[sel]
