@@ -102,7 +102,7 @@ class String
 	# Array
 	def csv(); self.split(/\s*,\s*/); end
 	def lines(); self.split("\n"); end
-	def words(); self.split(/\s+/); end
+	def words(); self.split(/\s+/).reject(&:empty?); end
 	def splits(); self.split(/\s+/); end
 	def sort(); self.split('').sort.join(''); end
 	def chunks_of(n); self.chars.chunks_of(n).mjoin; end
