@@ -15,7 +15,6 @@ inputs[1] = 'input.txt'.read
 params[1] = nil
 answers[1] = 679
 
-
 # Example input
 inputs[2] = <<-EOF
 3-5
@@ -40,13 +39,7 @@ answers[2] = 3
 def solve(input, param)
 	fresh, ids = input.lines.split('')
 	fresh = fresh.map { |f| f.split('-').i }
-
-	ans = 0
-	ids.i.each do |id|
-		ans += 1 if fresh.any? { |lo,hi| lo <= id and id <= hi }
-	end
-
-	return ans
+	return ids.i.count { |id| fresh.any? { |lo,hi| lo<=id and id<=hi } }
 end
 
 
