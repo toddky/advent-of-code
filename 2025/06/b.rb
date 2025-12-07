@@ -32,7 +32,7 @@ answers[2] = 3263827
 def solve(input, param)
 	lines = input.lines
 
-	ops = lines.map(&:words)[-1]
+	ops = lines.map(&:words).last
 	chars = input.lines.mchars
 	nums = chars[0..-2].transpose.mjoin.i.split(0)
 

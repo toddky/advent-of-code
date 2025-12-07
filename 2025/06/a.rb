@@ -15,7 +15,6 @@ inputs[1] = 'input.txt'.read
 params[1] = nil
 answers[1] = 4583860641327
 
-
 # Example input
 inputs[2] = <<-EOF
 123 328  51 64 
@@ -35,7 +34,7 @@ def solve(input, param)
 
 	ans = 0
 	words.transpose.each do |row|
-		op = row[-1]
+		op = row.last
 		nums = row[0..-2].i
 		if op == '*'
 			ans += nums.product
